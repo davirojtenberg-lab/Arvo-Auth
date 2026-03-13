@@ -1,80 +1,20 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Badge,
   Box,
   Button,
-  IconButton,
   InputAdornment,
-  Link,
   MenuItem,
   TextField,
   Typography,
 } from '@mui/material'
-import Logo from '../components/Logo'
-import UserMenu from '../components/UserMenu'
+import AppHeader from '../components/AppHeader'
+import AppStepper from '../components/AppStepper'
+import AppFooter from '../components/AppFooter'
 
-const imgNotifications = 'http://localhost:3845/assets/f65369d372ad36a089e4bbdf47d41d66780a2aed.svg'
-
-const imgStepDone     = 'http://localhost:3845/assets/23dd6772b22addfad05cd7a77b34a9df7df2e957.svg'
-const imgStepDoneIcon = 'http://localhost:3845/assets/363fb76ef112bf1341d9e1f682692bde8a605291.svg'
-const imgStepActive   = 'http://localhost:3845/assets/6e48262f31c2eaae741b2dcb1940957f9c6ec1c1.svg'
-const imgStepInactive = 'http://localhost:3845/assets/84ddce9fa8d7819777bcf2297c61b2d1539e9d27.svg'
-
-const imgDocScanner    = 'http://localhost:3845/assets/d428539db2aa9657be184aacba58eb28f00b350a.svg'
-const imgPersonFilled  = 'http://localhost:3845/assets/1d82bbfd4252e4af67210ee1f9b2de5b0978badd.svg'
-const imgHospital      = 'http://localhost:3845/assets/d9799c29cb3f049ecd900f883f5a3a7d8cc7cc35.svg'
-
-const steps = [
-  { label: 'Upload do pedido', state: 'done' },
-  { label: 'Diagnóstico',      state: 'done' },
-  { label: 'Revisão e Dados',  state: 'active' },
-  { label: 'Resultado',        state: 'inactive' },
-]
-
-function Stepper() {
-  return (
-    <Box sx={{ bgcolor: 'white', borderRadius: '51px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 2, width: 1256, mx: 'auto' }}>
-      {steps.map((step, idx) => (
-        <Box key={idx} sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, width: 189 }}>
-            <Box sx={{ position: 'relative', width: 48, height: 48, flexShrink: 0 }}>
-              {step.state === 'done' ? (
-                <>
-                  <img src={imgStepDone} alt="" style={{ width: 48, height: 48 }} />
-                  <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 24, height: 24 }}>
-                    <img src={imgStepDoneIcon} alt="" style={{ width: '100%', height: '100%' }} />
-                  </Box>
-                </>
-              ) : (
-                <>
-                  <img src={step.state === 'active' ? imgStepActive : imgStepInactive} alt="" style={{ width: 48, height: 48 }} />
-                  <Typography sx={{
-                    position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
-                    fontWeight: 700, fontSize: 24, lineHeight: 1.334,
-                    color: step.state === 'active' ? 'white' : 'rgba(0,0,0,0.6)',
-                  }}>
-                    {idx + 1}
-                  </Typography>
-                </>
-              )}
-            </Box>
-            <Typography sx={{
-              fontSize: 13, fontWeight: step.state === 'active' ? 700 : 400,
-              letterSpacing: 0.16, lineHeight: '18px', textAlign: 'center',
-              color: step.state === 'active' ? 'primary.main' : 'rgba(0,0,0,0.6)',
-            }}>
-              {step.label}
-            </Typography>
-          </Box>
-          {idx < steps.length - 1 && (
-            <Box sx={{ width: 160, height: 4, borderRadius: '22px', background: 'linear-gradient(to right, #faf6f2 0%, #ffb3ae 135%)', flexShrink: 0 }} />
-          )}
-        </Box>
-      ))}
-    </Box>
-  )
-}
+const imgDocScanner    = '/assets/d428539db2aa9657be184aacba58eb28f00b350a.svg'
+const imgPersonFilled  = '/assets/1d82bbfd4252e4af67210ee1f9b2de5b0978badd.svg'
+const imgHospital      = '/assets/d9799c29cb3f049ecd900f883f5a3a7d8cc7cc35.svg'
 
 function CalendarIcon() {
   return (
@@ -119,34 +59,13 @@ export default function Revisao() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#faf6f2', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
-      <Box component="header" sx={{ bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 16, height: 80, flexShrink: 0 }}>
-        <Box sx={{ width: 110, height: 27, overflow: 'hidden', flexShrink: 0 }}>
-          <Box sx={{ transform: `scale(${110 / 190})`, transformOrigin: 'top left', width: 190, height: 46.547 }}>
-            <Logo />
-          </Box>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5 }}>
-          <Button variant="outlined" color="primary" size="medium" onClick={() => navigate('/home')}>
-            Lista de pedidos
-          </Button>
-          <Button variant="contained" color="primary" size="medium" onClick={() => navigate('/novo-pedido')}>
-            Novo pedido
-          </Button>
-          <Badge badgeContent={2} color="primary">
-            <IconButton size="medium" sx={{ color: 'rgba(0,0,0,0.54)' }}>
-              <img src={imgNotifications} alt="Notificações" style={{ width: 24, height: 24 }} />
-            </IconButton>
-          </Badge>
-          <UserMenu />
-        </Box>
-      </Box>
+      <AppHeader />
 
       {/* Main content */}
-      <Box sx={{ flex: 1, px: 16, pt: 3, pb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-        <Stepper />
+      <Box sx={{ flex: 1, px: { xs: 2, md: 16 }, pt: 3, pb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+        <AppStepper activeStep={2} />
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: 616 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: '100%', maxWidth: 616 }}>
           {/* Title */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, alignItems: 'center', textAlign: 'center' }}>
             <Typography variant="h5">Dados Complementares</Typography>
@@ -156,7 +75,7 @@ export default function Revisao() {
           </Box>
 
           {/* Card: Dados da Guia */}
-          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: { xs: 3, md: 6 }, display: 'flex', flexDirection: 'column', gap: 4 }}>
             <SectionHeader icon={imgDocScanner} title="Dados da Guia" />
             <TextField
               label="Código da Guia"
@@ -164,7 +83,7 @@ export default function Revisao() {
               onChange={(e) => setGuia(g => ({ ...g, codigo: e.target.value }))}
               fullWidth
             />
-            <Box sx={{ display: 'flex', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
               <TextField
                 label="CID"
                 value={guia.cid}
@@ -188,7 +107,7 @@ export default function Revisao() {
           </Box>
 
           {/* Card: Dados do Beneficiário */}
-          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: { xs: 3, md: 6 }, display: 'flex', flexDirection: 'column', gap: 4 }}>
             <SectionHeader icon={imgPersonFilled} title="Dados do Beneficiário" />
             <TextField
               label="Nome do Beneficiário"
@@ -203,7 +122,7 @@ export default function Revisao() {
               fullWidth
               helperText="Número impresso no cartão do beneficiário"
             />
-            <Box sx={{ display: 'flex', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
               <TextField
                 label="CPF"
                 value={beneficiario.cpf}
@@ -227,7 +146,7 @@ export default function Revisao() {
           </Box>
 
           {/* Card: Dados do Prestador */}
-          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: { xs: 3, md: 6 }, display: 'flex', flexDirection: 'column', gap: 4 }}>
             <SectionHeader icon={imgHospital} title="Dados do Prestador" />
             <TextField
               label="Médico"
@@ -235,7 +154,7 @@ export default function Revisao() {
               onChange={(e) => setPrestador(p => ({ ...p, medico: e.target.value }))}
               fullWidth
             />
-            <Box sx={{ display: 'flex', gap: 3 }}>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
               <TextField
                 label="CRM"
                 value={prestador.crm}
@@ -294,16 +213,7 @@ export default function Revisao() {
         </Box>
       </Box>
 
-      {/* Footer */}
-      <Box component="footer" sx={{ bgcolor: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 16, py: 1, fontSize: 14, letterSpacing: 0.17, lineHeight: '24px' }}>
-        <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
-          © 2026 Arvo Auth - Sistema de Autorização Médica
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 5 }}>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>Documentação</Link>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>Suporte</Link>
-        </Box>
-      </Box>
+      <AppFooter />
     </Box>
   )
 }

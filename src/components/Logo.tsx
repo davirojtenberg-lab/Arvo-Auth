@@ -1,5 +1,5 @@
-const imgLogo = 'http://localhost:3845/assets/94170ef9bfcd472d6fb4e288cabf8b4a458e93f1.svg'
-const imgGroup1 = 'http://localhost:3845/assets/8a82bad5a6274cad66e442ccbef16d36bd799b39.svg'
+const imgLogo = '/assets/94170ef9bfcd472d6fb4e288cabf8b4a458e93f1.svg'
+const imgGroup1 = '/assets/8a82bad5a6274cad66e442ccbef16d36bd799b39.svg'
 
 export default function Logo() {
   return (

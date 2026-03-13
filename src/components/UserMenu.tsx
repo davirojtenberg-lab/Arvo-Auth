@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { Box, Popover, Typography } from '@mui/material'
 
 
-const imgAccountCircle = 'http://localhost:3845/assets/053816bff7d647f8be5dc424be75ac9d1c48a4df.svg'
-const imgLockOpen = 'http://localhost:3845/assets/01ed661d15f2c95979f102a94f3bfce57a9bde37.svg'
-const imgLogout = 'http://localhost:3845/assets/f1f8cd891bb9f962ecff7d5950ba645991f0b866.svg'
+const imgAccountCircle = '/assets/053816bff7d647f8be5dc424be75ac9d1c48a4df.svg'
+const imgLockOpen = '/assets/01ed661d15f2c95979f102a94f3bfce57a9bde37.svg'
+const imgLogout = '/assets/f1f8cd891bb9f962ecff7d5950ba645991f0b866.svg'
 
 type UserMenuProps = {
   name?: string
@@ -67,6 +67,7 @@ export default function UserMenu({ name = 'Rafael Sobrenome', institution = 'Hos
             sx: {
               mt: 1,
               width: 226,
+              maxWidth: 'calc(100vw - 16px)',
               borderRadius: '8px',
               border: '1px solid #bbb',
               boxShadow: '4px 4px 12px 0px rgba(0,0,0,0.12)',

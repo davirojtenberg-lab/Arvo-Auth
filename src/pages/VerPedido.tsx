@@ -1,16 +1,15 @@
 import { useNavigate } from 'react-router-dom'
-import { Badge, Box, Button, Divider, IconButton, Link, Tooltip, Typography } from '@mui/material'
+import { Box, Button, Divider, IconButton, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
-import Logo from '../components/Logo'
-import UserMenu from '../components/UserMenu'
+import AppHeader from '../components/AppHeader'
+import AppFooter from '../components/AppFooter'
 
-const imgNotifications  = 'http://localhost:3845/assets/f65369d372ad36a089e4bbdf47d41d66780a2aed.svg'
-const imgCopyIcon       = 'http://localhost:3845/assets/f40bbb5dd7e5293f9af06818c3c89cbe0da463c3.svg'
-const imgDownload       = 'http://localhost:3845/assets/6208372c1f41606f8f8d5da080566be2ee4ec835.svg'
-const imgDocScanner     = 'http://localhost:3845/assets/d428539db2aa9657be184aacba58eb28f00b350a.svg'
-const imgMedicalSvcs    = 'http://localhost:3845/assets/4593b0472eab8bb61f22597146f78547c0d6f4bf.svg'
-const imgPersonFilled   = 'http://localhost:3845/assets/1d82bbfd4252e4af67210ee1f9b2de5b0978badd.svg'
-const imgHospital       = 'http://localhost:3845/assets/d9799c29cb3f049ecd900f883f5a3a7d8cc7cc35.svg'
+const imgCopyIcon       = '/assets/f40bbb5dd7e5293f9af06818c3c89cbe0da463c3.svg'
+const imgDownload       = '/assets/6208372c1f41606f8f8d5da080566be2ee4ec835.svg'
+const imgDocScanner     = '/assets/d428539db2aa9657be184aacba58eb28f00b350a.svg'
+const imgMedicalSvcs    = '/assets/4593b0472eab8bb61f22597146f78547c0d6f4bf.svg'
+const imgPersonFilled   = '/assets/1d82bbfd4252e4af67210ee1f9b2de5b0978badd.svg'
+const imgHospital       = '/assets/d9799c29cb3f049ecd900f883f5a3a7d8cc7cc35.svg'
 
 const GUIDE_CODE = 'AG-2026-00008495'
 
@@ -23,7 +22,7 @@ const procedures = [
 
 function SectionCard({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
   return (
-    <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+    <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: { xs: 3, md: 6 }, display: 'flex', flexDirection: 'column', gap: 4 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <img src={icon} alt="" style={{ width: 24, height: 26 }} />
         <Typography variant="h6" color="primary">{title}</Typography>
@@ -38,7 +37,8 @@ type DataRow = { label: string; value: string; helper?: string }
 function DataTable({ rows }: { rows: DataRow[] }) {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ display: 'flex', gap: 2, pb: 1.5 }}>
+      {/* Desktop header — hidden on mobile */}
+      <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, pb: 1.5 }}>
         <Typography sx={{ width: 180, flexShrink: 0, fontSize: 12, fontWeight: 500, color: 'rgba(0,0,0,0.6)', letterSpacing: 0.17 }}>
           Campo
         </Typography>
@@ -46,10 +46,11 @@ function DataTable({ rows }: { rows: DataRow[] }) {
           Valor
         </Typography>
       </Box>
-      <Divider />
+      <Divider sx={{ display: { xs: 'none', md: 'block' } }} />
       {rows.map((row, idx) => (
         <Box key={idx}>
-          <Box sx={{ display: 'flex', gap: 2, py: 1.5, alignItems: 'baseline' }}>
+          {/* Desktop layout: two columns */}
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, py: 1.5, alignItems: 'baseline' }}>
             <Typography variant="body2" sx={{ width: 180, flexShrink: 0, color: 'rgba(0,0,0,0.6)' }}>
               {row.label}
             </Typography>
@@ -64,6 +65,22 @@ function DataTable({ rows }: { rows: DataRow[] }) {
               )}
             </Box>
           </Box>
+
+          {/* Mobile layout: stacked */}
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', py: 1.5 }}>
+            <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.6)', mb: 0.25 }}>
+              {row.label}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.87)', fontWeight: 500 }}>
+              {row.value}
+            </Typography>
+            {row.helper && (
+              <Typography sx={{ fontSize: 12, color: 'rgba(0,0,0,0.6)', letterSpacing: 0.4, mt: 0.25 }}>
+                {row.helper}
+              </Typography>
+            )}
+          </Box>
+
           {idx < rows.length - 1 && <Divider />}
         </Box>
       ))}
@@ -83,34 +100,13 @@ export default function VerPedido() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#faf6f2', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
-      <Box component="header" sx={{ bgcolor: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', px: 16, height: 80, flexShrink: 0 }}>
-        <Box sx={{ width: 110, height: 27, overflow: 'hidden', flexShrink: 0 }}>
-          <Box sx={{ transform: `scale(${110 / 190})`, transformOrigin: 'top left', width: 190, height: 46.547 }}>
-            <Logo />
-          </Box>
-        </Box>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5 }}>
-          <Button variant="outlined" color="primary" size="medium" onClick={() => navigate('/home')}>
-            Lista de pedidos
-          </Button>
-          <Button variant="contained" color="primary" size="medium" onClick={() => navigate('/novo-pedido')}>
-            Novo pedido
-          </Button>
-          <Badge badgeContent={2} color="primary">
-            <IconButton size="medium" sx={{ color: 'rgba(0,0,0,0.54)' }}>
-              <img src={imgNotifications} alt="Notificações" style={{ width: 24, height: 24 }} />
-            </IconButton>
-          </Badge>
-          <UserMenu />
-        </Box>
-      </Box>
+      <AppHeader />
 
       {/* Main content */}
-      <Box sx={{ flex: 1, px: 16, pt: 3, pb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+      <Box sx={{ flex: 1, px: { xs: 2, md: 16 }, pt: 3, pb: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
 
         {/* Page title */}
-        <Box sx={{ width: 616, display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <Box sx={{ width: '100%', maxWidth: 616, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <Button
             variant="text"
             color="primary"
@@ -131,10 +127,10 @@ export default function VerPedido() {
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: 616 }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, width: '100%', maxWidth: 616 }}>
 
           {/* ── Card 1: Resultado da autorização ── */}
-          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: 6, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
+          <Box sx={{ bgcolor: 'white', borderRadius: '24px', p: { xs: 3, md: 6 }, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3 }}>
 
             {/* Success icon */}
             <Box sx={{ width: 64, height: 64, borderRadius: '50%', bgcolor: '#6fdaa6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -159,8 +155,10 @@ export default function VerPedido() {
               borderRadius: '16px',
               p: 2,
               display: 'flex',
-              alignItems: 'center',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: { xs: 'flex-start', md: 'center' },
               justifyContent: 'space-between',
+              gap: 1,
               width: '100%',
             }}>
               <Typography sx={{ fontWeight: 700, fontSize: 16, letterSpacing: 0.15, color: '#034b28' }}>
@@ -182,8 +180,8 @@ export default function VerPedido() {
           {/* ── Card 2: Procedimentos ── */}
           <SectionCard icon={imgMedicalSvcs} title="Procedimentos identificados">
             <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              {/* Table header */}
-              <Box sx={{ display: 'flex', gap: 2, pb: 1.5 }}>
+              {/* Table header — desktop only */}
+              <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, pb: 1.5 }}>
                 <Typography sx={{ width: 145, flexShrink: 0, fontSize: 12, fontWeight: 500, color: 'rgba(0,0,0,0.6)', letterSpacing: 0.17 }}>
                   Cod. TUSS
                 </Typography>
@@ -191,14 +189,24 @@ export default function VerPedido() {
                   Descrição do Procedimento
                 </Typography>
               </Box>
-              <Divider />
+              <Divider sx={{ display: { xs: 'none', md: 'block' } }} />
               {procedures.map((proc, idx) => (
                 <Box key={idx}>
-                  <Box sx={{ display: 'flex', gap: 2, py: 1.5, alignItems: 'center' }}>
+                  {/* Desktop: side by side */}
+                  <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 2, py: 1.5, alignItems: 'center' }}>
                     <Typography variant="body2" sx={{ width: 145, flexShrink: 0, color: 'rgba(0,0,0,0.87)' }}>
                       {proc.code}
                     </Typography>
                     <Typography variant="body2" sx={{ flex: 1, color: 'rgba(0,0,0,0.87)' }}>
+                      {proc.description}
+                    </Typography>
+                  </Box>
+                  {/* Mobile: stacked */}
+                  <Box sx={{ display: { xs: 'flex', md: 'none' }, flexDirection: 'column', py: 1.5 }}>
+                    <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.6)', mb: 0.25 }}>
+                      {proc.code}
+                    </Typography>
+                    <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.87)', fontWeight: 500 }}>
                       {proc.description}
                     </Typography>
                   </Box>
@@ -263,16 +271,7 @@ export default function VerPedido() {
         </Box>
       </Box>
 
-      {/* Footer */}
-      <Box component="footer" sx={{ bgcolor: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 16, py: 1 }}>
-        <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.6)' }}>
-          © 2026 Arvo Auth - Sistema de Autorização Médica
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 5 }}>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>Documentação</Link>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>Suporte</Link>
-        </Box>
-      </Box>
+      <AppFooter />
     </Box>
   )
 }

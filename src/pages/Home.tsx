@@ -1,13 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  Badge,
   Box,
   Button,
   FormControl,
-  IconButton,
   InputLabel,
-  Link,
   MenuItem,
   Select,
   TextField,
@@ -21,11 +18,10 @@ import {
   Typography,
 } from '@mui/material'
 import type { SelectChangeEvent } from '@mui/material'
-import Logo from '../components/Logo'
-import UserMenu from '../components/UserMenu'
+import AppHeader from '../components/AppHeader'
+import AppFooter from '../components/AppFooter'
 
-const imgNotifications = 'http://localhost:3845/assets/f65369d372ad36a089e4bbdf47d41d66780a2aed.svg'
-const imgVerPedido = 'http://localhost:3845/assets/b339f873451e6a7fae73e417cea5fb4c949ebfdc.svg'
+const imgVerPedido = '/assets/b339f873451e6a7fae73e417cea5fb4c949ebfdc.svg'
 
 const rows = [
   { beneficiario: 'Rodrigo Mariano', documento: '047.370.870-17', hospital: 'Hospital Central', medico: 'Dr. André Antunes', data: '26/01/2026', status: '🟡 Pendente' },
@@ -43,45 +39,10 @@ export default function Home() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: '#faf6f2', display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
-      <Box
-        component="header"
-        sx={{
-          bgcolor: 'white',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          px: 16,
-          height: 80,
-          flexShrink: 0,
-        }}
-      >
-        <Box sx={{ width: 110, height: 27, overflow: 'hidden', flexShrink: 0 }}>
-          <Box sx={{ transform: `scale(${110 / 190})`, transformOrigin: 'top left', width: 190, height: 46.547 }}>
-            <Logo />
-          </Box>
-        </Box>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2.5 }}>
-          <Button variant="outlined" color="primary" size="medium">
-            Lista de pedidos
-          </Button>
-          <Button variant="contained" color="primary" size="medium" onClick={() => navigate('/novo-pedido')}>
-            Novo pedido
-          </Button>
-
-          <Badge badgeContent={2} color="primary">
-            <IconButton size="medium" sx={{ color: 'rgba(0,0,0,0.54)' }}>
-              <img src={imgNotifications} alt="Notificações" style={{ width: 24, height: 24 }} />
-            </IconButton>
-          </Badge>
-
-          <UserMenu />
-        </Box>
-      </Box>
+      <AppHeader />
 
       {/* Main content */}
-      <Box sx={{ flex: 1, px: 16, pt: 3, pb: 4 }}>
+      <Box sx={{ flex: 1, px: { xs: 2, md: 16 }, pt: 3, pb: 4 }}>
         <Typography variant="h5" sx={{ mb: 3 }}>
           Solicitações de Autorização
         </Typography>
@@ -96,8 +57,8 @@ export default function Home() {
           }}
         >
           {/* Toolbar */}
-          <Box sx={{ display: 'flex', gap: 2.5, p: 2, alignItems: 'center' }}>
-            <Box sx={{ display: 'flex', flex: 1, gap: 2 }}>
+          <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2.5, p: 2, alignItems: { xs: 'stretch', md: 'center' } }}>
+            <Box sx={{ display: 'flex', flex: 1, gap: 2, flexDirection: { xs: 'column', md: 'row' } }}>
               <TextField
                 label="Buscar"
                 placeholder="Código, nome benefíciário, nome médico ..."
@@ -118,25 +79,54 @@ export default function Home() {
               </FormControl>
             </Box>
             <Box sx={{ display: 'flex', gap: 2, flexShrink: 0 }}>
-              <Button variant="outlined" color="inherit" size="medium">
+              <Button variant="outlined" color="inherit" size="medium" fullWidth>
                 Limpar
               </Button>
-              <Button variant="contained" color="primary" size="medium">
+              <Button variant="contained" color="primary" size="medium" fullWidth>
                 Filtrar
               </Button>
             </Box>
           </Box>
 
           {/* Table */}
-          <TableContainer>
+          <TableContainer sx={{ overflowX: 'auto' }}>
             <Table>
               <TableHead>
                 <TableRow>
-                  {['Beneficiário', 'Documento', 'Hospital / Médico', 'Data de solicitação', 'Status', 'Ação'].map((col) => (
-                    <TableCell key={col} sx={{ fontWeight: 500, fontSize: 14, letterSpacing: 0.17, lineHeight: '24px' }}>
-                      {col}
-                    </TableCell>
-                  ))}
+                  <TableCell sx={{ fontWeight: 500, fontSize: 14, letterSpacing: 0.17, lineHeight: '24px' }}>
+                    Beneficiário
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 500,
+                      fontSize: 14,
+                      letterSpacing: 0.17,
+                      lineHeight: '24px',
+                      display: { xs: 'none', md: 'table-cell' },
+                    }}
+                  >
+                    Documento
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      fontWeight: 500,
+                      fontSize: 14,
+                      letterSpacing: 0.17,
+                      lineHeight: '24px',
+                      display: { xs: 'none', md: 'table-cell' },
+                    }}
+                  >
+                    Hospital / Médico
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 500, fontSize: 14, letterSpacing: 0.17, lineHeight: '24px' }}>
+                    Data de solicitação
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 500, fontSize: 14, letterSpacing: 0.17, lineHeight: '24px' }}>
+                    Status
+                  </TableCell>
+                  <TableCell sx={{ fontWeight: 500, fontSize: 14, letterSpacing: 0.17, lineHeight: '24px' }}>
+                    Ação
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -145,10 +135,10 @@ export default function Home() {
                     <TableCell>
                       <Typography variant="body2">{row.beneficiario}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                       <Typography variant="body2">{row.documento}</Typography>
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
                       <Typography variant="body2">{row.hospital}</Typography>
                       <Typography variant="body2">{row.medico}</Typography>
                     </TableCell>
@@ -192,34 +182,7 @@ export default function Home() {
         </Box>
       </Box>
 
-      {/* Footer */}
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: 'white',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          px: 16,
-          py: 1,
-          fontFamily: '"Space Grotesk", sans-serif',
-          fontSize: 14,
-          letterSpacing: 0.17,
-          lineHeight: '24px',
-        }}
-      >
-        <Typography variant="body2" sx={{ color: 'rgba(0,0,0,0.6)', textAlign: 'right' }}>
-          © 2026 Arvo Auth - Sistema de Autorização Médica
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 5 }}>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>
-            Documentação
-          </Link>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>
-            Suporte
-          </Link>
-        </Box>
-      </Box>
+      <AppFooter />
     </Box>
   )
 }

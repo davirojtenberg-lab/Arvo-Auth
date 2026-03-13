@@ -1,9 +1,9 @@
 import { Box, Dialog, IconButton, Typography } from '@mui/material'
 
-const imgBomExemplo = 'http://localhost:3845/assets/7e13fffe041c90a34a993f3d6761b24a62c80158.png'
-const imgMauExemplo1 = 'http://localhost:3845/assets/b4698d09332226b67462b0c42451ab367eae20f1.png'
-const imgMauExemplo2 = 'http://localhost:3845/assets/d6b12990b66be52954f3375b85ddac7dedba1eca.png'
-const imgMauExemplo3 = 'http://localhost:3845/assets/d49f3e5d8a832c9e09835f216c2d03f628980675.png'
+const imgBomExemplo = '/assets/7e13fffe041c90a34a993f3d6761b24a62c80158.png'
+const imgMauExemplo1 = '/assets/b4698d09332226b67462b0c42451ab367eae20f1.png'
+const imgMauExemplo2 = '/assets/d6b12990b66be52954f3375b85ddac7dedba1eca.png'
+const imgMauExemplo3 = '/assets/d49f3e5d8a832c9e09835f216c2d03f628980675.png'
 
 type Props = {
   open: boolean
@@ -21,9 +21,9 @@ export default function BoasPraticasModal({ open, onClose }: Props) {
           sx: {
             bgcolor: '#f0f0f0',
             borderRadius: '24px',
-            p: 6,
+            p: { xs: 3, md: 6 },
             position: 'relative',
-            maxWidth: 900,
+            maxWidth: { xs: '95vw', sm: 900 },
             width: '100%',
           },
         },
@@ -48,7 +48,7 @@ export default function BoasPraticasModal({ open, onClose }: Props) {
         </Box>
 
         {/* Two columns */}
-        <Box sx={{ display: 'flex', gap: 9, alignItems: 'flex-start' }}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: { xs: 3, md: 9 }, alignItems: 'flex-start' }}>
           {/* Coluna Sim */}
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
@@ -68,7 +68,13 @@ export default function BoasPraticasModal({ open, onClose }: Props) {
               component="img"
               src={imgBomExemplo}
               alt="Bom exemplo"
-              sx={{ width: 323, height: 443, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
+              sx={{
+                width: { xs: '100%', md: 323 },
+                height: { xs: 'auto', md: 443 },
+                objectFit: 'cover',
+                borderRadius: '4px',
+                display: 'block',
+              }}
             />
           </Box>
 
@@ -94,20 +100,20 @@ export default function BoasPraticasModal({ open, onClose }: Props) {
                   component="img"
                   src={imgMauExemplo1}
                   alt="Mau exemplo 1"
-                  sx={{ width: 146, height: 198, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
+                  sx={{ width: { xs: '47%', md: 146 }, height: { xs: 'auto', md: 198 }, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
                 />
                 <Box
                   component="img"
                   src={imgMauExemplo2}
                   alt="Mau exemplo 2"
-                  sx={{ width: 146, height: 198, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
+                  sx={{ width: { xs: '47%', md: 146 }, height: { xs: 'auto', md: 198 }, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
                 />
               </Box>
               <Box
                 component="img"
                 src={imgMauExemplo3}
                 alt="Mau exemplo 3"
-                sx={{ width: 326, height: 213, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
+                sx={{ width: { xs: '100%', md: 326 }, height: { xs: 'auto', md: 213 }, objectFit: 'cover', borderRadius: '4px', display: 'block' }}
               />
             </Box>
           </Box>

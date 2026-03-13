@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material'
 import Logo from '../components/Logo'
+import AppFooter from '../components/AppFooter'
 
 export default function Login() {
   const [accepted, setAccepted] = useState(false)
@@ -34,6 +35,7 @@ export default function Login() {
           justifyContent: 'center',
           gap: 4,
           py: 6,
+          px: { xs: 2, md: 0 },
         }}
       >
         <Logo />
@@ -43,8 +45,8 @@ export default function Login() {
           sx={{
             bgcolor: 'white',
             borderRadius: 3,
-            p: 6,
-            width: 402,
+            p: { xs: 3, md: 6 },
+            width: { xs: '100%', sm: 480 },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -58,7 +60,8 @@ export default function Login() {
               display: 'flex',
               flexDirection: 'column',
               gap: 2,
-              width: 306,
+              width: '100%',
+              maxWidth: 306,
             }}
           >
             <TextField label="E-mail" fullWidth defaultValue="rafael@arvo.com.br" />
@@ -105,7 +108,7 @@ export default function Login() {
             color="primary"
             size="large"
             fullWidth
-            sx={{ width: 306, py: 1 }}
+            sx={{ maxWidth: 306, py: 1 }}
             onClick={() => navigate('/home')}
           >
             Entrar
@@ -113,37 +116,7 @@ export default function Login() {
         </Box>
       </Box>
 
-      {/* Footer */}
-      <Box
-        component="footer"
-        sx={{
-          bgcolor: 'white',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          px: 16,
-          py: 1,
-          fontFamily: '"Space Grotesk", sans-serif',
-          fontSize: 14,
-          letterSpacing: 0.17,
-          lineHeight: '24px',
-        }}
-      >
-        <Typography
-          variant="body2"
-          sx={{ color: 'rgba(0,0,0,0.6)', textAlign: 'right' }}
-        >
-          © 2026 Arvo Auth - Sistema de Autorização Médica
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 5 }}>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>
-            Documentação
-          </Link>
-          <Link href="#" underline="none" sx={{ color: 'primary.main', fontSize: 14, letterSpacing: 0.17 }}>
-            Suporte
-          </Link>
-        </Box>
-      </Box>
+      <AppFooter />
     </Box>
   )
 }
